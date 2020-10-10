@@ -1,0 +1,67 @@
+
+* {
+  //outline: 1px solid red;
+}
+
+html,body {
+  max-width: 960px;
+}
+
+
+.arena {
+  height: 60vh;
+}
+
+.background {
+  background: url('../img/bg.gif') no-repeat center fixed;
+  background-size: cover;
+}
+
+.bottom-bg {
+  background: url('../img/bg-blue.png') no-repeat center;
+  background-size: cover;
+}
+
+#target {
+  background: url('../img/coco-cartoon.png') no-repeat center;
+  background-size: contain;
+  box-shadow: 0px 0px 10px 0px #333;
+}
+
+#target:active {
+  box-shadow: 0px 0px 0px 0px #333;
+}
+
+.scoreboard {
+  height: 10vh;
+  font-size: 2em;
+}
+
+.store, .inventory {
+  height: 15vh;
+}
+
+.inventory {
+  font-size: 3em;
+}
+
+#macheteBtn {
+  height: 10vh;
+  background: url('../img/machete.png') no-repeat center center;
+  background-size: contain;
+}
+
+#pickerBtn {
+  background: url('../img/toucan.png') no-repeat center center;
+  background-size: contain;
+}
+
+#monkeyBtn {
+  background: url('../img/monkey.png') no-repeat center center;
+  background-size: contain;
+}
+
+#troopBtn {
+  background: url('../img/troop.png') no-repeat center center;
+  background-size: contain;
+}
