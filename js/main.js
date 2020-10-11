@@ -24,37 +24,51 @@ class Modifier {
 
 // objects
 let mods = {
-  machete: new Modifier('Machete', 1, 1, false),
-  picker: new Modifier('Picker', 1, 5, false),
-  monkey: new Modifier('Monkey', 1, 15, true, 3),
-  troop: new Modifier('Troop', 1, 50, true, 5)
+  machete: new Modifier('Machete', 30, 1, false),
+  toucan: new Modifier('Toucan', 90, 1, true, 1),
+  monkey: new Modifier('Monkey', 270, 30, true, 15),
+  troop: new Modifier('Troop', 810, 150, true, 30)
 }
 
 
 // gather elements from DOM
 let coconutCountElem = document.getElementById('coconutCount')
 let targetElem = document.getElementById('target')
+let totalStaticModMultiplierElem = document.getElementById('totalStaticModMultiplier')
+let totalAutoModMultiplierElem = document.getElementById('totalAutoModMultiplier')
 
-let macheteCountElem = document.getElementById('macheteCount')
-let pickerCountElem = document.getElementById('pickerCount')
-let monkeyCountElem = document.getElementById('monkeyCount')
-let troopCountElem = document.getElementById('troopCount')
-
+// machete
 let macheteBtnElem = document.getElementById('macheteBtn')
-let pickerBtnElem = document.getElementById('pickerBtn')
+let machetePriceElem = document.getElementById('machetePrice')
+let macheteCountElem = document.getElementById('macheteCount')
+let macheteMultiplierElem = document.getElementById('macheteMultiplier')
+// toucan
+let toucanBtnElem = document.getElementById('toucanBtn')
+let toucanPriceElem = document.getElementById('toucanPrice')
+let toucanCountElem = document.getElementById('toucanCount')
+let toucanMultiplierElem = document.getElementById('toucanMultiplier')
+// monkey
 let monkeyBtnElem = document.getElementById('monkeyBtn')
+let monkeyPriceElem = document.getElementById('monkeyPrice')
+let monkeyCountElem = document.getElementById('monkeyCount')
+let monkeyMultiplierElem = document.getElementById('monkeyMultiplier')
+// troop
 let troopBtnElem = document.getElementById('troopBtn')
+let troopPriceElem = document.getElementById('troopPrice')
+let troopCountElem = document.getElementById('troopCount')
+let troopMultiplierElem = document.getElementById('troopMultiplier')
+
 
 
 // functions
 
 
-
-let setAutoModInterval = (mod, autoModMultiplier, seconds) => {
+let setAutoModInterval = (mod, seconds) => {
   intervalName = mod.name.toString().toLowerCase()
-  if (!autoModIntervalsArray[intervalName]) {
-    autoModIntervalsArray[intervalName] = setInterval(() => {coconutCount += autoModMultiplier; draw()}, mod.autoInterval * seconds)
-  }
+  autoModIntervalsArray[intervalName] = setInterval(() => {
+    coconutCount += mod.multiplier ; draw()
+  }, mod.autoInterval * seconds)
+
   console.log('setAutoModInterval ' + intervalName)
 }
 
@@ -62,7 +76,7 @@ let sumMods = mod => {
   if (mod.isAuto) {
     let seconds = mod.seconds
     autoModMultiplier += mod.multiplier
-    setAutoModInterval(mod, autoModMultiplier, seconds)
+    setAutoModInterval(mod, seconds)
   } else {
     staticModMultiplier += mod.multiplier
   }
@@ -74,7 +88,7 @@ let applyMod = strModName => {
   if (coconutCount >= mod.price) {
     coconutCount -= mod.price
     mod.inventory++
-    mod.price += Math.floor(mod.price * 1.15)
+    mod.price += Math.ceil(mod.price * 0.15)
     sumMods(mod)
   }
 }
@@ -87,14 +101,30 @@ let gather = () => {
 
 let draw = () => {
   coconutCountElem.innerText = coconutCount.toString()
+  totalStaticModMultiplierElem.innerText = staticModMultiplier.toString()
+  totalAutoModMultiplierElem.innerText = autoModMultiplier.toString()
+
+  machetePriceElem.innerText = mods.machete.price.toString()
   macheteCountElem.innerText = mods.machete.inventory.toString()
-  pickerCountElem.innerText = mods.picker.inventory.toString()
+  macheteMultiplierElem.innerText = mods.machete.multiplier.toString()
+
+  toucanPriceElem.innerText = mods.toucan.price.toString()
+  toucanCountElem.innerText = mods.toucan.inventory.toString()
+  toucanMultiplierElem.innerText = mods.toucan.multiplier.toString()
+
+  monkeyPriceElem.innerText = mods.monkey.price.toString()
   monkeyCountElem.innerText = mods.monkey.inventory.toString()
+  monkeyMultiplierElem.innerText = mods.monkey.multiplier.toString()
+
+  troopPriceElem.innerText = mods.troop.price.toString()
   troopCountElem.innerText = mods.troop.inventory.toString()
-  console.log('draw coconutCount = ' + coconutCount)
-  console.log('... regularClick ' + 1)
-  console.log('... staticModMultiplier ' + staticModMultiplier)
-  console.log('... autoModMultiplier ' + autoModMultiplier)
+  troopMultiplierElem.innerText = mods.troop.multiplier.toString()
+
+
+  // console.log('draw coconutCount = ' + coconutCount)
+  // console.log('... regularClick ' + 1)
+  // console.log('... staticModMultiplier ' + staticModMultiplier)
+  // console.log('... autoModMultiplier ' + autoModMultiplier)
 }
 
 draw()

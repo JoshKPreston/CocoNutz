@@ -12,49 +12,115 @@
 </head>
 
 <body>
-  <!-- <nav class="navbar">
-    <h1>CocoNutz</h1>
-  </nav> -->
   <div class="container-fluid vh-100 background">
+
+
+    <!-- scoreboard -->
     <header class="row scoreboard">
       <div class="col-12 text-light">
-        <span>CocoNutz: <span id="coconutCount">--</span></span>
+        <span>CocoNutz: <span id="coconutCount"></span></span>
+      </div>
+      <div class="col-12 text-light">
+        <span>Total Static Buff: <span id="totalStaticModMultiplier"></span></span>
+      </div>
+      <div class="col-12 text-light">
+        <span>Total Auto Buff: <span id="totalAutoModMultiplier"></span></span>
       </div>
     </header>
+
+
+    <!-- arena -->
     <main class="row arena">
       <div class="col-12 d-flex justify-content-center align-items-end">
-        <div id="target" class="h-100 w-100" onclick="gather()"></div>
+        <div id="target" class="coco h-100 w-100" onclick="gather()"></div>
       </div>
     </main>
 
 
-    <footer>
-      <!-- store -->
-      <div class="store row text-light justify-content-center">
-        <div id="macheteBtn" class="col-3 modifier" onclick="applyMod('machete')"></div>
-        <div id="pickerBtn" class="col-3 modifier" onclick="applyMod('picker')"></div>
-        <div id="monkeyBtn" class="col-3 modifier" onclick="applyMod('monkey')"></div>
-        <div id="troopBtn" class="col-3 modifier" onclick="applyMod('troop')"></div>
+    <!-- store -->
+    <div class="row store text-light justify-content-center">
+      <div id="macheteBtn" class="col-3 modifier h-100 machete" onclick="applyMod('machete')"></div>
+      <div id="toucanBtn" class="col-3 modifier h-100 toucan" onclick="applyMod('toucan')"></div>
+      <div id="monkeyBtn" class="col-3 modifier h-100 monkey" onclick="applyMod('monkey')"></div>
+      <div id="troopBtn" class="col-3 modifier h-100 troop" onclick="applyMod('troop')"></div>
+    </div>
+
+
+    <!-- inventory -->
+    <div class="inventory row bg-info text-light">
+
+      <div class="col-3 h-100 w-100 inventory-box d-flex flex-column">
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>-<span id="machetePrice"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="macheteCount"></span></span></div>
+          <div class="col-6 machete icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="macheteMultiplier"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-12 text-center"><small>/click</small></span></div>
+        </div>
       </div>
 
-      <!-- inventory -->
-      <div class="inventory row text-center text-light align-items-center bg-dark bottom-bg">
-        <div class="col-3 inventory-box">
-          <span id="macheteCount"></span>
+      <div class="col-3 h-100 w-100 inventory-box d-flex flex-column">
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>-<span id="toucanPrice"></span></span></div>
+          <div class="col-6 coco icon"></div>
         </div>
-        <div class="col-3 inventory-box">
-          <span id="pickerCount"></span>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="toucanCount"></span></span></div>
+          <div class="col-6 toucan icon"></div>
         </div>
-        <div class="col-3 inventory-box">
-          <span id="monkeyCount"></span>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="toucanMultiplier"></span></span></div>
+          <div class="col-6 coco icon"></div>
         </div>
-        <div class="col-3 inventory-box">
-          <span id="troopCount"></span>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-12 text-center"><small>/sec</small></span></div>
         </div>
       </div>
-    </footer>
 
+      <div class="col-3 h-100 w-100 inventory-box d-flex flex-column">
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>-<span id="monkeyPrice"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="monkeyCount"></span></span></div>
+          <div class="col-6 monkey icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="monkeyMultiplier"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-12 text-center"><small>/5sec</small></span></div>
+        </div>
+      </div>
 
+      <div class="col-3 h-100 w-100 inventory-box d-flex flex-column">
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>-<span id="troopPrice"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="troopCount"></span></span></div>
+          <div class="col-6 troop icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-6 text-center"><span>+<span id="troopMultiplier"></span></span></div>
+          <div class="col-6 coco icon"></div>
+        </div>
+        <div class="row flex-grow-1 justify-content-center align-items-center">
+          <div class="col-12 text-center"><small>/10sec</small></span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
 
