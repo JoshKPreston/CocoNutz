@@ -5,7 +5,9 @@ let coconutCount = 0
 let staticModMultiplier = 0
 let autoModMultiplier = 0
 let autoModIntervalsArray = []
+let modAvailabilityIntervalsArray = []
 let intervalName = null
+let priceIncrementValue = 0.15
 
 // classes
 class Modifier {
@@ -14,6 +16,7 @@ class Modifier {
     this.price = price
     this.multiplier = multiplier
     this.inventory = 0
+    this.isAvailable = false
     this.isAuto = isAuto
     if (this.isAuto) {
       this.autoInterval = 1000;
@@ -23,11 +26,17 @@ class Modifier {
 }
 
 // objects
+/*
+30
+90
+270
+810
+*/
 let mods = {
   machete: new Modifier('Machete', 30, 1, false),
   toucan: new Modifier('Toucan', 90, 1, true, 1),
-  monkey: new Modifier('Monkey', 270, 30, true, 15),
-  troop: new Modifier('Troop', 810, 150, true, 30)
+  monkey: new Modifier('Monkey', 270, 10, true, 5),
+  troop: new Modifier('Troop', 810, 15, true, 3)
 }
 
 
@@ -36,40 +45,118 @@ let coconutCountElem = document.getElementById('coconutCount')
 let targetElem = document.getElementById('target')
 let totalStaticModMultiplierElem = document.getElementById('totalStaticModMultiplier')
 let totalAutoModMultiplierElem = document.getElementById('totalAutoModMultiplier')
+let modifiersElem = document.getElementsByClassName('modifier')
 
 // machete
 let macheteBtnElem = document.getElementById('macheteBtn')
 let machetePriceElem = document.getElementById('machetePrice')
+let machetePriceDivElem = document.getElementById('machetePriceDiv')
 let macheteCountElem = document.getElementById('macheteCount')
 let macheteMultiplierElem = document.getElementById('macheteMultiplier')
+let macheteOverlayElem = document.getElementById('macheteOverlay')
+
 // toucan
 let toucanBtnElem = document.getElementById('toucanBtn')
 let toucanPriceElem = document.getElementById('toucanPrice')
+let toucanPriceDivElem = document.getElementById('toucanPriceDiv')
 let toucanCountElem = document.getElementById('toucanCount')
 let toucanMultiplierElem = document.getElementById('toucanMultiplier')
+let toucanOverlayElem = document.getElementById('toucanOverlay')
+
 // monkey
 let monkeyBtnElem = document.getElementById('monkeyBtn')
 let monkeyPriceElem = document.getElementById('monkeyPrice')
+let monkeyPriceDivElem = document.getElementById('monkeyPriceDiv')
 let monkeyCountElem = document.getElementById('monkeyCount')
 let monkeyMultiplierElem = document.getElementById('monkeyMultiplier')
+let monkeyOverlayElem = document.getElementById('monkeyOverlay')
+
 // troop
 let troopBtnElem = document.getElementById('troopBtn')
 let troopPriceElem = document.getElementById('troopPrice')
+let troopPriceDivElem = document.getElementById('troopPriceDiv')
 let troopCountElem = document.getElementById('troopCount')
 let troopMultiplierElem = document.getElementById('troopMultiplier')
+let troopOverlayElem = document.getElementById('troopOverlay')
 
 
 
 // functions
 
+let hasEnoughCocos = mod => coconutCount >= mod.price ? true : false
+
+let addClass = (elem, className) => {
+  elem.classList.add(className)
+}
+
+let removeClass = (elem, className) => {
+  elem.classList.remove(className)
+}
+
+let checkModAvailability = mod => {
+  let elem = null
+  switch (mod.name.toString().toLowerCase()) {
+    case 'machete':
+      elem = {
+        overlay: macheteOverlayElem, 
+        button: macheteBtnElem,
+        price: machetePriceDivElem
+      }
+      break
+    case 'toucan':
+      elem = {
+        overlay: toucanOverlayElem, 
+        button: toucanBtnElem,
+        price: toucanPriceDivElem
+      }
+      break
+    case 'monkey':
+      elem = {
+        overlay: monkeyOverlayElem, 
+        button: monkeyBtnElem,
+        price: monkeyPriceDivElem
+      }
+      break
+    case 'troop':
+      elem = {
+        overlay: troopOverlayElem, 
+        button: troopBtnElem,
+        price: troopPriceDivElem
+      }
+      break
+    default:
+      console.log('checkModAvailability function did not find any matching case statement for switch (mod.name)')
+      break
+  }
+  if (hasEnoughCocos(mod)) {
+      removeClass(elem.overlay, 'mod-not-available')
+      removeClass(elem.price, 'price-counter-red')
+      removeClass(elem.button, 'roll-in-left')
+      removeClass(elem.button, 'roll-in-top')
+      removeClass(elem.button, 'roll-in-right')
+      addClass(elem.button, 'vibrate-3')
+  } else {
+      addClass(elem.overlay, 'mod-not-available')
+      addClass(elem.price, 'price-counter-red')
+      removeClass(elem.button, 'vibrate-3')
+  }
+}
+
+let setCheckModAvailabilityInterval = miliseconds => {
+  for (const key in mods) {
+    if (mods.hasOwnProperty(key)) {
+      const mod = mods[key];
+      intervalName = mod.name.toString().toLowerCase()
+      modAvailabilityIntervalsArray[intervalName] = setInterval(checkModAvailability, miliseconds, mod)
+    }
+  }
+}
 
 let setAutoModInterval = (mod, seconds) => {
   intervalName = mod.name.toString().toLowerCase()
   autoModIntervalsArray[intervalName] = setInterval(() => {
-    coconutCount += mod.multiplier ; draw()
+    coconutCount += mod.multiplier; draw()
   }, mod.autoInterval * seconds)
-
-  console.log('setAutoModInterval ' + intervalName)
 }
 
 let sumMods = mod => {
@@ -85,10 +172,10 @@ let sumMods = mod => {
 
 let applyMod = strModName => {
   let mod = mods[strModName]
-  if (coconutCount >= mod.price) {
+  if (hasEnoughCocos(mod)) {
     coconutCount -= mod.price
     mod.inventory++
-    mod.price += Math.ceil(mod.price * 0.15)
+    mod.price += Math.ceil(mod.price * priceIncrementValue)
     sumMods(mod)
   }
 }
@@ -128,3 +215,5 @@ let draw = () => {
 }
 
 draw()
+
+setCheckModAvailabilityInterval(100)
