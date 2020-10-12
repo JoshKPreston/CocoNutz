@@ -33,10 +33,10 @@ class Modifier {
 810
 */
 let mods = {
-  machete: new Modifier('Machete', 30, 1, false),
-  toucan: new Modifier('Toucan', 90, 1, true, 1),
-  monkey: new Modifier('Monkey', 270, 10, true, 5),
-  troop: new Modifier('Troop', 810, 15, true, 3)
+  machete: new Modifier('Machete', 1, 1, false),
+  toucan: new Modifier('Toucan', 1, 1, true, 1),
+  monkey: new Modifier('Monkey', 1, 10, true, 5),
+  troop: new Modifier('Troop', 1, 15, true, 3)
 }
 
 

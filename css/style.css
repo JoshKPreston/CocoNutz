@@ -8,7 +8,7 @@ font-family: 'Stalinist One', cursive;
 
 
 * {
-  //outline: 1px solid red;
+/*   outline: 1px solid red; */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
@@ -62,7 +62,7 @@ body {
 
 .icon {
   height: 5vh;
-  background: url('../img/coco-cartoon.png') no-repeat center;
+  background: url('../img/coco-cartoon-h800.png') no-repeat center;
   background-size: contain;
 }
 
@@ -81,26 +81,26 @@ body {
   right: 0;
   height: 100%;
   width: 100%;
-  border-radius: 50px;
+  border-radius: 20px;
 }
 
 .machete {
-  background: url('../img/machete.png') no-repeat center center;
+  background: url('../img/machete-h400.png') no-repeat center center;
   background-size: contain;
 }
 
 .toucan {
-  background: url('../img/toucan.png') no-repeat center center;
+  background: url('../img/toucan-h400.png') no-repeat center center;
   background-size: contain;
 }
 
 .monkey {
-  background: url('../img/monkey2.png') no-repeat center center;
+  background: url('../img/monkey2-h400.png') no-repeat center center;
   background-size: contain;
 }
 
 .troop {
-  background: url('../img/troop.png') no-repeat center center;
+  background: url('../img/troop-h400.png') no-repeat center center;
   background-size: contain;
 }
 
