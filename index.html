@@ -13,6 +13,7 @@
 </head>
 
 <body>
+  <div id="messageBox" class="container-fluid"></div>
   <div class="container-fluid vh-100 background">
 
 
@@ -20,10 +21,13 @@
     <header class="row scoreboard">
       <div class="col-12 coco-title-box d-flex justify-content-between align-items-center">
         <div id="title">CocoNutz</div>
-        <div id="scoreTitle" class="d-flex flex-column justify-content-center p-3">
-          <span>+<span id="coconutCount"></span>/CocoNutz</span> 
+        <div id="scoreTitle" class="d-flex flex-column justify-content-center p-2 stats">
+          <span id="currentUserName"></span>
+          <span>Top: <span id="topScore"></span></span>
+          <span>+<span id="coconutCount"></span>/Cocoz</span> 
           <span>+<span id="totalAutoModMultiplier"></span>/sec</span>
           <span>+<span id="totalStaticModMultiplier"></span>/click</span>
+          
         </div>
       </div>
     </header>
@@ -32,7 +36,7 @@
     <!-- arena -->
     <main class="row arena">
       <div class="col-12 d-flex justify-content-center align-items-end">
-        <div id="target" class="button coco h-100 w-100 roll-in-top" onclick="gather()" onmousedown="removeClass(targetElem,'jello-horizontal') & removeClass(targetElem, 'roll-in-top')" onmouseup="addClass(targetElem,'jello-horizontal')"></div>
+        <div id="target" class="button coco h-100 w-100 hidden" onclick="gather()" onmousedown="removeClass(targetElem,'jello-horizontal') & removeClass(targetElem, 'roll-in-top')" onmouseup="addClass(targetElem,'jello-horizontal')"></div>
       </div>
     </main>
 
@@ -40,19 +44,19 @@
     <!-- store -->
     <div class="row store text-light justify-content-center">
       
-      <div id="macheteBtn" class="col-3 h-100 machete button modifier roll-in-left" onclick="applyMod('machete')">
+      <div id="macheteBtn" class="col-3 h-100 machete button modifier hidden" onclick="applyMod('machete')">
         <div id="macheteOverlay" class="mod-not-available"></div>
       </div>
       
-      <div id="toucanBtn" class="col-3 h-100 toucan button modifier roll-in-top" onclick="applyMod('toucan')">
+      <div id="toucanBtn" class="col-3 h-100 toucan button modifier hidden" onclick="applyMod('toucan')">
         <div id="toucanOverlay" class="mod-not-available"></div>
       </div>
       
-      <div id="monkeyBtn" class="col-3 h-100 monkey button modifier roll-in-top" onclick="applyMod('monkey')">
+      <div id="monkeyBtn" class="col-3 h-100 monkey button modifier hidden" onclick="applyMod('monkey')">
         <div id="monkeyOverlay" class="mod-not-available"></div>
       </div>
       
-      <div id="troopBtn" class="col-3 h-100 troop button modifier roll-in-right" onclick="applyMod('troop')">
+      <div id="troopBtn" class="col-3 h-100 troop button modifier hidden" onclick="applyMod('troop')">
         <div id="troopOverlay" class="mod-not-available"></div>
       </div>
     </div>
@@ -69,11 +73,11 @@
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 machete icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="macheteCount"></span></span></div>
+          <div class="col-6"><span>+<span id="macheteCount"></span></span></div>
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 coco icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="macheteMultiplier"></span>c</span></div>
+          <div class="col-6"><span>+<span id="macheteMultiplier"></span>/c</span></div>
         </div>
       </div>
 
@@ -85,11 +89,11 @@
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 toucan icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="toucanCount"></span></span></div>
+          <div class="col-6"><span>+<span id="toucanCount"></span></span></div>
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 coco icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="toucanMultiplier"></span>s</span></div>
+          <div class="col-6"><span>+<span id="toucanMultiplier"></span>/s</span></div>
         </div>
       </div>
 
@@ -101,11 +105,11 @@
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 monkey icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="monkeyCount"></span></span></div>
+          <div class="col-6"><span>+<span id="monkeyCount"></span></span></div>
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 coco icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="monkeyMultiplier"></span>s</span></div>
+          <div class="col-6"><span>+<span id="monkeyMultiplier"></span>/s</span></div>
         </div>
       </div>
 
@@ -117,11 +121,11 @@
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 troop icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="troopCount"></span></span></div>
+          <div class="col-6"><span>+<span id="troopCount"></span></span></div>
         </div>
         <div class="row flex-grow-1 text-left stat align-items-center">
           <div class="col-2 coco icon"></div>
-          <div class="col-6 inv-counter-green"><span>+<span id="troopMultiplier"></span>s</span></div>
+          <div class="col-6"><span>+<span id="troopMultiplier"></span>/s</span></div>
         </div>
         <!-- <div class="row flex-grow-1 justify-content-center align-items-center">
           <div class="col-12 text-center"><small>/10sec</small></span></div>
